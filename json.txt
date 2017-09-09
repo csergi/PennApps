@@ -1,4 +1,6 @@
 Example JSONS
+
+POST to /submit.php
 post a question
 	{
 	  "request":"post",
