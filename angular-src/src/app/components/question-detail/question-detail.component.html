@@ -1,9 +1,14 @@
 <div class="container">
 
-  <div style="width: 100vw; height: 64px;"></div>
+  <div style="height: 64px;"></div>
 
   <div id="question-title">
-    <h4>{{questionTitle}}</h4>
+    <h4>
+      {{questionTitle}}
+      <a [routerLink]="['/home']">
+        <i class="fa fa-1x fa-times pull-right"></i>
+      </a>
+    </h4>
   </div>
 
   <div class="new-row">

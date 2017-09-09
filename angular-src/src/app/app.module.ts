@@ -11,6 +11,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { QuestionItemComponent } from './components/question-item/question-item.component';
 import { QuestionDetailComponent } from './components/question-detail/question-detail.component';
+import { AskQuestionComponent } from './components/ask-question/ask-question.component';
+import { QuestionService } from './services/questionservice.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { QuestionDetailComponent } from './components/question-detail/question-d
     HomeComponent,
     NavbarComponent,
     QuestionItemComponent,
-    QuestionDetailComponent
+    QuestionDetailComponent,
+    AskQuestionComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,7 @@ import { QuestionDetailComponent } from './components/question-detail/question-d
     FormsModule,
     BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [ QuestionService, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
