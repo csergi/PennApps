@@ -19,3 +19,6 @@ env_variables:
 
 beta_settings:
   cloud_sql_instances: "pennapps-179414:us-east1:studentoverflowdb"
+
+runtime_config:
+  document_root: .
