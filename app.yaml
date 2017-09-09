@@ -1,6 +1,7 @@
 runtime: php
 env: flex
 
+handlers:
 # Serve images as static resources.
 - url: /(.+\.(gif|png|jpg))$
   static_files: \1
@@ -10,3 +11,11 @@ env: flex
 # Serve php,html,and js scripts.
 - url: /(.+\.(php|html|js))$
   script: \1
+
+env_variables:
+	MYSQL_USER: dbuser
+	MYSQL_PASSWORD: 007ShakenNotStirred%
+	MYSQL_DSN: mysql:dbname=pennapps;unix_socket=/cloudsql/pennapps-179414:us-east1:studentoverflowdb
+
+beta_settings:
+	cloud_sql_instances: "pennapps-179414:us-east1:studentoverflowdb"

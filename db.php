@@ -1,9 +1,9 @@
-<?php 
-$host = 'localhost';  //  hostname
-$db = 'pennapps';  //  databasename
-$usr = 'dbuser';  //  username
-$pass = '007ShakenNotStirred%';  //  passw
-$dbh = new PDO("mysql:host=$host;dbname=$db", $usr, $pass);
+<?php
+//Code for Cloud SQL
+$dsn = getenv('MYSQL_DSN');
+$user = getenv('MYSQL_USER');
+$password = getenv('MYSQL_PASSWORD');
+$pdo = new PDO($dsn, $user, $password);
 $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 $dbh->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
 ?>
