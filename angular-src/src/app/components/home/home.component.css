@@ -14,7 +14,7 @@
   height: 70vh;
 }
 #bgimg{
-    background-image:url('red.jpg');
+    background-image:url('/assets/red.jpg');
     height: 200px;
     opacity:.90;
 }
