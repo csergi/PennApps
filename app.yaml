@@ -1,0 +1,12 @@
+runtime: php
+env: flex
+
+# Serve images as static resources.
+- url: /(.+\.(gif|png|jpg))$
+  static_files: \1
+  upload: .+\.(gif|png|jpg)$
+  application_readable: true
+
+# Serve php,html,and js scripts.
+- url: /(.+\.(php|html|js))$
+  script: \1
