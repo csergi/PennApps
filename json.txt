@@ -1,0 +1,88 @@
+Example JSONS
+post a question
+	{
+	  "request":"post",
+	  "name": "Colin Sergi",
+	  "body": "What's 9 + 10",
+	  "tags": [
+	  "Addition"
+	  ],
+	  "type": 0
+	}
+	
+	response
+	{"success":true}
+	
+post a comment
+	{
+	  "request":"post",
+	  "name": "Colin Sergi",
+	  "body": "What's 9 + 10",
+	  "tags": [
+	  "Addition"
+	  ],
+	  "type": 1,
+	  "thread":"016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
+	}
+	
+	response
+	{"success":true}
+	
+search the db
+request
+	{
+	  "request":"search",
+	  "query": "Addition"
+	}
+response
+	{
+  "sucess": true,
+  "query": "addition",
+  "results": [
+    {
+      "name": "Colin Sergi",
+      "body": "What's 9 + 10",
+      "tags": [
+        "Addition"
+      ],
+      "thread": "016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
+    },
+    {
+      "name": "Colin Sergi",
+      "body": "What's 9 + 10",
+      "tags": [
+        "Addition"
+      ],
+      "thread": "82ea347319dba0836de21724d652d0255fb9e6061aa9dc2592d5ad43cd0306e0"
+    }
+  ]
+}
+
+get A thread
+
+{
+	"request":"thread",
+	"thread":"016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
+}
+
+response
+{
+  "question": {
+    "name": "Colin Sergi",
+    "body": "What's 9 + 10",
+    "tags": [
+      "Addition"
+    ],
+    "thread": "016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
+  },
+  "answers": [
+    {
+      "name": "Colin Sergi",
+      "body": "What's 9 + 10",
+      "tags": "Addition",
+      "thread": "016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
+    }
+  ],
+  "success": true
+}
+	

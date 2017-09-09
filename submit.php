@@ -1,22 +1,17 @@
 <?php
-$host = '  ';  //  hostname
-$name = '  ';  //  databasename
-$usr = '  ';  //  username
-$pass = '  ';  //  passw
-$dbh = new PDO("mysql:host=$host;dbname=$db", $db_user, $user_pw);
 
 function createID(){//exacts what it will be will be determined later
     //generate something that is random
-    $rand = bindec(openssl_random_pseudo_bytes(8));
-    return $ran;
+    $rand = bin2hex(openssl_random_pseudo_bytes(32));
+    return $rand;
 }
 
 function post($dbh , $name, $body, $tags, $type, $thread = -1){
-	$stmt = $dbh->prepare('REPLACE INTO posts (id, name, body, tags, type, thread, time) VALUES (NULL, :name, :body, :tags, :type, :thread, NOW(), )');//create a way to deal with nonunique ids
+	$stmt = $dbh->prepare('INSERT INTO posts (id, name, body, tags, type, thread, time) VALUES (NULL, :name, :body, :tags, :type, :thread, NOW())');//create a way to deal with nonunique ids
 	$id = createID();
 	$stmt->bindValue(':name', $name);
 	$stmt->bindValue(':body', $body);
-	$stmt->bindValue(':tags', serialize($tags));
+	$stmt->bindValue(':tags', implode(',' , $tags));
 	
 	//if its a question type is 0; if its a comment, 1
 	if($type == 0){
@@ -26,25 +21,28 @@ function post($dbh , $name, $body, $tags, $type, $thread = -1){
 		$stmt->bindValue(':type', 1);
 		$stmt->bindValue(':thread', $thread);
 	}
+	$stmt->execute();
+	
 	return 0;
 }
 
 function searchPosts($dbh , $searchString){
-	$searchString = preg_replace('/\+s/', $searchString);
+	$searchString = preg_replace('/\+s/', ' ', $searchString);
 	$searchTerms = explode(' ' , $searchString);
 	$threads = array();
 	foreach($searchTerms as $term){
 		$termStmt = $dbh->prepare('SET @term = :term');
 		$termStmt->execute(array($term));
 		$sql = 	"SELECT thread FROM posts WHERE
-			name LIKE CONCAT('%', @term, '%') OR
-			body LIKE CONCAT('%', @term, '%') OR
-			tags LIKE CONCAT('%', @term, '%')";
+			UPPER(name) LIKE CONCAT('%', UPPER(@term), '%') OR
+			UPPER(body) LIKE CONCAT('%', UPPER(@term), '%') OR
+			UPPER(tags) LIKE CONCAT('%', UPPER(@term), '%')";
 		$searchStmt = $dbh->prepare($sql);
 		$searchStmt->execute();
 		$res = $searchStmt->fetchAll(PDO::FETCH_ASSOC);
 		foreach($res as $record){
-			$thread = $record['thread'];		
+			$thread = $record['thread'];
+			$threads[$thread] = $thread; //forces uniqueness
 		}
 	}
 
@@ -56,7 +54,7 @@ function searchPosts($dbh , $searchString){
 		$stmt->execute();
 		//should just be the question
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
-		$res['tags'] = unserialize($res['tags']);
+		$res['tags'] = explode(',' , $res['tags']);
 		array_push($results, $res);
 	}
 	return $results;
@@ -67,10 +65,11 @@ function getThread($dbh , $thread){
 	//need the question, need the answers
 	
 	//get the question
-	$qStmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 AND thread=:thread');
+	$qStmt = $dbh->prepare('SELECT name,body,tags,thread FROM posts WHERE type = 0 AND thread=:thread');
 	$qStmt->bindValue(':thread', $thread);
+	$qStmt->execute();
 	$threadData['question'] = $qStmt->fetch(PDO::FETCH_ASSOC);
-	$threadData['question']['tags'] = unserialize($threadData['question']['tags']);
+	$threadData['question']['tags'] = explode(',' , $threadData['question']['tags']);
 	
 	//get the answers
 	$replyStmt = $dbh->prepare('SELECT name,body,tags,thread FROM posts WHERE type = 1 AND thread=:thread');
@@ -82,7 +81,7 @@ function getThread($dbh , $thread){
 	    $threadData['answers'] = 'none';
 	}else{
 	    foreach($res as $answer){
-	        $answer['tags'] = unserialize['tags'];
+	        $answer['tags'] = explode(',' , $answer['tags']);
 	    }
 	    $threadData['answers'] = $res;
 	}
@@ -91,16 +90,21 @@ function getThread($dbh , $thread){
 
 //start of main request processor
 
-//set up the db conn at top of file
+//set up the db conn
+require 'db.php';
 
 //get the json of the request
 $requestBody = file_get_contents('php://input');
-$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed")));
+$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
 
 //process the request
 if($json['request'] == 'post'){
     try{
-        $ret = post($dbh, $json['name'], $json['body'], $json['tags'], $json['type'], $json['thread']);
+        if($json['type'] == 0){
+            $ret = post($dbh, $json['name'], $json['body'], $json['tags'], $json['type']);
+        }else if($json['type'] == 1){
+            $ret = post($dbh, $json['name'], $json['body'], $json['tags'], $json['type'], $json['thread']);
+        }
         $out = array();
         if($ret == 0){
             $out['success'] = true;
@@ -116,11 +120,11 @@ if($json['request'] == 'post'){
 }else if($json['request'] == 'search'){
     $out = array();
     try{
-        $results = searchPosts($dbh , $json['searchString']);
+        $results = searchPosts($dbh , $json['query']);
         $out['sucess'] = true;
-        $out['query'] = $json['searchString'];
+        $out['query'] = $json['query'];
         $out['results'] = $results;
-        echo json_encode($results);
+        echo json_encode($out);
     }catch(Exception $e){
         $out['success'] = false;
         echo json_encode($out);
@@ -137,8 +141,8 @@ if($json['request'] == 'post'){
     }
 }else{
     $out = array();
-    out['success'] = false;
-    out['error'] = 'Invalid API Request';
+    $out['success'] = false;
+    $out['error'] = 'Invalid API Request';
     echo json_encode($out);
 }
 ?>
