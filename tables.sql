@@ -1,10 +1,10 @@
 CREATE TABLE posts(
-	id BIGINT,
+	id BIGINT AUTO_INCREMENT NOT NULL,
 	name TEXT,
 	body TEXT,
 	tags TEXT,
 	type INT, --0 if its a question, 1 if its answer,
-	thread INT,
+	thread BIGINT,
 	time TIMESTAMP,
 	PRIMARY KEY(id)
 );
