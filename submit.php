@@ -73,7 +73,7 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 }
 
 function popularPosts($dbh, $numberOfResults){
-    $stmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 ORDER BY views LIMIT :num');
+    $stmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 ORDER BY views DESC LIMIT :num');
     $stmt->bindValue(':num', $numberOfResults);
     $stmt->execute();
     
