@@ -1,6 +1,6 @@
 Example JSONS
 
-POST to /submit.php
+POST to /submit.php to deal with posts
 post a question
 	{
 	  "request":"post",
@@ -87,4 +87,6 @@ response
   ],
   "success": true
 }
+
+
 	
