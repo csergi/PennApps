@@ -1,24 +1,22 @@
 Example JSONS
 
 POST to /submit.php to deal with posts
-post a question
+Post a question
 	{
 	  "request":"post",
-	  "name": "Colin Sergi",
 	  "body": "What's 9 + 10",
 	  "tags": [
 	  "Addition"
 	  ],
 	  "type": 0
 	}
-	
+
 	response
 	{"success":true}
-	
+
 post a comment
 	{
 	  "request":"post",
-	  "name": "Colin Sergi",
 	  "body": "What's 9 + 10",
 	  "tags": [
 	  "Addition"
@@ -26,10 +24,10 @@ post a comment
 	  "type": 1,
 	  "thread":"016fce04ef7fb6ff50c332a31c250a2c857189f9f8b5d6caf14d1d2befe564e6"
 	}
-	
+
 	response
 	{"success":true}
-	
+
 search the db
 request
 	{
@@ -87,6 +85,3 @@ response
   ],
   "success": true
 }
-
-
-	
