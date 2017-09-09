@@ -154,7 +154,9 @@ try{
     $client->setAccessToken($_COOKIE['token']);
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
-    $name = $usrInfo->getName();
+    $lastName = $usrInfo->getFamilyName();
+    $firstName = $usrInfo->getGivenName();
+    $displayName = $firstName . ' ' . $lastName;
     $email = $usrInfo->getEmail();
 }catch(Exception $e){
     $authorizedRequest = false;
