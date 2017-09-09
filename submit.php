@@ -56,6 +56,7 @@ function searchPosts($dbh , $searchString){
 		$stmt->execute();
 		//should just be the question
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		$res['tags'] = unserialize($res['tags']);
 		array_push($results, $res);
 	}
 	return $results;
@@ -64,9 +65,14 @@ function searchPosts($dbh , $searchString){
 function getThread($dbh , $thread){
 	$threadData = array();
 	//need the question, need the answers
+	
+	//get the question
 	$qStmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 AND thread=:thread');
 	$qStmt->bindValue(':thread', $thread);
 	$threadData['question'] = $qStmt->fetch(PDO::FETCH_ASSOC);
+	$threadData['question']['tags'] = unserialize($threadData['question']['tags']);
+	
+	//get the answers
 	$replyStmt = $dbh->prepare('SELECT name,body,tags,thread FROM posts WHERE type = 1 AND thread=:thread');
 	$replyStmt->bindValue(':thread', $thread);
 	$replyStmt->execute();
@@ -75,6 +81,9 @@ function getThread($dbh , $thread){
 	if(empty($res)){
 	    $threadData['answers'] = 'none';
 	}else{
+	    foreach($res as $answer){
+	        $answer['tags'] = unserialize['tags'];
+	    }
 	    $threadData['answers'] = $res;
 	}
 	return $threadData;
