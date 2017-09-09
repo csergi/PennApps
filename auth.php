@@ -9,7 +9,7 @@ $authorizedRequest = true;
 $client = new Google_Client();
 $client->setAuthConfig('google.json');
 $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
-$client->setRedirectUri(
+$client->setRedirectUri('http://pennapps-179414.appspot.com/index.html');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     setcookie('token', $client->getAccessToken() ,  time() + 3600 , '/');
