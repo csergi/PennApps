@@ -1,0 +1,5 @@
+1. Create simple webapp that does basic needs of what were looking for
+
+2. Add more advanced features: like system for answers, rating system for users
+
+3. We must start using the app to create a mini database of posts
