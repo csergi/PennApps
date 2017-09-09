@@ -9,11 +9,12 @@ $authorizedRequest = true;
 $client = new Google_Client();
 $client->setAuthConfig('google.json');
 $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
-$client->setRedirectUri('http://pennapps-179414.appspot.com/index.html');
+$client->setRedirectUri('http://pennapps-179414.appspot.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     setcookie('token', $client->getAccessToken() ,  time() + 3600 , '/');
     $_COOKIE['token'] = $client->getAccessToken(); //set up for use in this script.
+    echo '<script>window.location.href="/index.html";</script>';
 }
 
 try{
@@ -38,6 +39,7 @@ if($json['request'] == 'logout' && isset($_COOKIE['token'])){
     require 'db.php';
     $stmt = $dbh->prepare('DELETE FROM auth WHERE oauthToken = ?');
     $stmt->execute(array($_COOKIE['token']));
+    $client->revokeToken();
     setcookie('token' , '' , time() + (3600) , '/');
     unset($_COOKIE['token']);
     $response = array();
@@ -47,7 +49,7 @@ if($json['request'] == 'logout' && isset($_COOKIE['token'])){
 
 if($json['request'] == 'userData'){
     if($authorizedRequest == false){
-        die(json_encode(array("error"=>"unauthenticated Request")));
+        die(json_encode(array("error"=>"unauthenticated request")));
     }
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
