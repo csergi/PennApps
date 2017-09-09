@@ -3,6 +3,9 @@ On a standard post:
   - Question
   - Tags
   - Answers(comments)
+  - Reply button
+
+Create post page
 
 On front page:
   - search bar on top
@@ -11,3 +14,8 @@ On front page:
     - question
     - number of comments/answers
     
+Later:
+  - Add pages based on tags
+    - example: physics page or calculus page that only lists posts with those tags
+  - Page listing tags
+    - people may click on tag and then they view tags 
