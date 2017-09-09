@@ -1,6 +1,7 @@
 Example JSONS
 
 POST to /submit.php to deal with posts
+Need to have auth cookie to post & upvote
 Post a question
 	{
 	  "request":"post",
@@ -32,7 +33,8 @@ search the db
 request
 	{
 	  "request":"search",
-	  "query": "Addition"
+	  "query": "Addition",
+	  "numberOfResults":2
 	}
 response
 	{
@@ -85,3 +87,11 @@ response
   ],
   "success": true
 }
+
+
+get popular posts
+{
+	"request":"popular",
+	"numberOfResults":2
+}
+	
