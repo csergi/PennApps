@@ -169,7 +169,7 @@ $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON 
 //process the request
 if($json['request'] == 'post'){
     if($authorizedRequest == false){//if they are not signed in
-        die(json_encode(array("error"=>"authentication  failed")));
+        die(json_encode(array("error"=>"unauthenticated request")));
     }
     try{
         if($json['type'] == 0){
@@ -222,6 +222,9 @@ if($json['request'] == 'post'){
         echo $json_encode($out);
     }
 }else if($json['request'] == 'vote'){
+    if($authorizedRequest == false){
+        die(json_encode(array("error"=>"unauthenticated request")));
+    }
     $out = array();
     try{
         $out = vote($dbh, $json['id'] , $json['vote']);
