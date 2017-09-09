@@ -1,0 +1,10 @@
+On a standard post:
+  - User's name
+  - Question
+  - Tags
+  - Answers(comments)
+
+On front page:
+  - search bar on top
+  - list or array of questions (think reddit) that are links to posts (see above^^)
+  - 
