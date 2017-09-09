@@ -1,0 +1,35 @@
+<a href="http://localhost:4200/question/details/{{id}}">  
+  <div class="container-fluid question-container">
+    <div class="vcenter">
+      <div class="col-md-2">
+        <i class="fa fa-4x fa-fw fa-user-o"></i>
+      </div>
+
+      <div class="col-md-2">
+        <div>
+          <p class="question-stats">{{votes}} votes</p>
+        </div>
+
+        <div>
+          <p class="question-stats">{{answers}} answers</p>
+        </div>
+
+        <div>
+          <p class="question-stats">{{views}} views</p>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="row">
+          <h4 class="pull-left">{{questionTitle}}</h4>
+        </div>
+
+        <div class="row">
+          <p>Asked by {{inquirer}}</p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</a>

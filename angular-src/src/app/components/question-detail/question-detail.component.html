@@ -1,0 +1,152 @@
+<div class="container">
+
+  <div style="width: 100vw; height: 64px;"></div>
+
+  <div id="question-title">
+    <h4>{{questionTitle}}</h4>
+  </div>
+
+  <div class="new-row">
+    <div class="col-md-10" id="main-question-body">
+      <div>
+        <div class="col-md-1 text-center">
+          <div class="new-row">
+            <i class="fa fa-3x fa-fw fa-thumbs-up"></i>
+          </div>
+
+          <div class="new-row">
+            <p class="thumbsCount">13</p>
+          </div>
+
+          <div class="new-row">
+            <i class="fa fa-3x fa-fw fa-thumbs-down"></i>
+          </div>
+
+          <div class="new-row">
+            <i class="fa fa-3x fa-fw fa-star" style="color: #BDBDBD"></i>
+          </div>
+
+        </div>
+        <div class="col-md-11" id="question-body">
+          <p>
+            {{questionBody}}
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-2 text-center">
+      <div class="user-pic">
+        <i class="fa fa-4x fa-user-o fa-fw"></i>
+        <p class="user-name">
+          {{user}}
+        </p>
+
+        <div id="badge-row">
+          <div class="badge-container">
+            <i class="fa fa-1x fa-fw fa-circle gold-badge"></i>
+            <p>{{numGold}}</p>
+          </div>
+
+          <div class="badge-container">
+            <i class="fa fa-1x fa-fw fa-circle silver-badge"></i>
+            <p>{{numSilver}}</p>
+          </div>
+
+          <div class="badge-container">
+            <i class="fa fa-1x fa-fw fa-circle bronze-badge"></i>
+            <p>{{numBronze}}</p>
+          </div>
+        </div>
+
+        <div class="question-data">
+          <p>Asked {{dateInquired}}</p>
+          <p>Viewed {{numViews}} times</p>
+          <p>Active {{lastActive}} months ago</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="new-row">
+    <h5>{{numAns}} Answers</h5>
+  </div>
+
+  <div *ngFor="let currentResponse of ansArray; let i = index;">
+    <div class="new-row">
+      <div class="col-md-10" id="main-response-body">
+        <div id="responses">
+          <div class="col-md-1 text-center">
+            <div class="new-row">
+              <i class="fa fa-3x fa-fw fa-thumbs-up"></i>
+            </div>
+
+            <div class="new-row">
+              <p class="thumbsCount">5</p>
+            </div>
+
+            <div class="new-row">
+              <i class="fa fa-3x fa-fw fa-thumbs-down"></i>
+            </div>
+          </div>
+
+          <div class="col-md-11" id="response-body">
+            <p>
+              {{currentResponse}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-2 text-center">
+        <div class="user-pic">
+          <i class="fa fa-4x fa-user-o fa-fw"></i>
+          <p class="user-name">
+            Jane Doe
+          </p>
+
+          <div id="badge-row">
+            <div class="badge-container">
+              <i class="fa fa-1x fa-fw fa-circle gold-badge"></i>
+              <p>14</p>
+            </div>
+
+            <div class="badge-container">
+              <i class="fa fa-1x fa-fw fa-circle silver-badge"></i>
+              <p>5</p>
+            </div>
+
+            <div class="badge-container">
+              <i class="fa fa-1x fa-fw fa-circle bronze-badge"></i>
+              <p>7</p>
+            </div>
+          </div>
+
+          <div class="question-data">
+            <p>Asked Oct. 10th 2016</p>
+            <p>Viewed 14,320 times</p>
+            <p>Active 2 months ago</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="new-row">
+    <h5>Post your answer!</h5>
+    <p class="inline">PLEASE answer the question with clear work and steps. Provide any details or research you may have conducted.</p>
+    <br>
+    <p class="inline">PLEASE DO NOT provide your opinion on the matter unless stated otherwise</p>
+  </div>
+
+  <div class="form-container new-row">
+    <form>
+      <textarea name="answer" rows="8" cols="80" [(ngModel)]="submittedAns"></textarea>
+      <button (click)="submitAnswer()" class="btn btn-default">Submit</button>
+    </form>
+  </div>
+
+</div>
