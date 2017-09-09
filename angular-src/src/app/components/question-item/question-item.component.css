@@ -1,0 +1,25 @@
+.question-container {
+  border-top: grey solid 1px;
+  border-bottom: grey solid 1px;
+  margin: 15px 0px;
+}
+
+.question-stats {
+  display: block;
+  margin: 3px 0px;
+}
+
+.vcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.new-row {
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
