@@ -78,7 +78,6 @@ function popularPosts($dbh, $numberOfResults){
     $stmt->execute();
     
     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    print_r($res);
     return $res;
 }
 
