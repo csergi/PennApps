@@ -19,7 +19,7 @@ export class AskQuestionComponent implements OnInit {
   constructor(private qService : QuestionService) { }
 
   ngOnInit() {
-    if(!this.qService.name || !this.qService.email){
+    if(!this.qService.name){
       this.getGoogleLink();
     }
   }

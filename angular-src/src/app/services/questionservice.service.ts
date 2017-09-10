@@ -6,7 +6,6 @@ import 'rxjs/add/operator/map';
 export class QuestionService {
 
   public name : string;
-  public email : string;
   public uid : string;
 
   constructor(private http : Http) { }
@@ -67,8 +66,6 @@ export class QuestionService {
       if(res.json().success){
         this.name = res.json().name;
         console.log(this.name);
-        this.email = res.json().email;
-        console.log(this.email);
       } else {
         console.log(res.json().success);
       }
