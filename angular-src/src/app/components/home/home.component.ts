@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../services/questionservice.service';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
@@ -8,12 +10,16 @@ import { QuestionService } from '../../services/questionservice.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private qService : QuestionService) { }
+  constructor(private qService : QuestionService, private activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
     if(this.checkLoggedIn()){
       console.log("True");
     }
+    this.activatedRoute.params.subscribe((params : Params) => {
+      let uidVal =  params['uid'];
+      console.log(uidVal);
+    })
   }
 
   checkLoggedIn(){

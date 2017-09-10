@@ -48,6 +48,16 @@ export class QuestionService {
     return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers: headers });
   }
 
+  queryUserInfo(uidVal){
+    let headers = new Headers();
+    var reqObj = {
+      "request" : "userData",
+      "uid" : uidVal
+    }
+    headers.append("Content-Type", "application/json");
+    return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers });
+  }
+
 
 
 
