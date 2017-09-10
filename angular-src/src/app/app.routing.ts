@@ -4,7 +4,7 @@ import { QuestionDetailComponent } from './components/question-detail/question-d
 import { AskQuestionComponent } from './components/ask-question/ask-question.component';
 
 const ROUTES : Routes = [
-  { path: "", redirectTo: "/home", pathMatch: "full" },
+  { path: "", component: HomeComponent },
   { path: "home", component: HomeComponent },
   { path: "question/details/:id", component: QuestionDetailComponent },
   { path: "askquestion", component: AskQuestionComponent }
