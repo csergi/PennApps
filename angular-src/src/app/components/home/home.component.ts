@@ -10,16 +10,23 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  private userID : string;
+
   constructor(private qService : QuestionService, private activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
     if(this.checkLoggedIn()){
       console.log("True");
     }
-    this.activatedRoute.params.subscribe((params : Params) => {
-      let uidVal =  params['uid'];
-      console.log(uidVal);
-    })
+    // this.activatedRoute.params.subscribe((params : Params) => {
+    //   var uidVal =  params['uid'];
+    //   console.log(uidVal);
+    // });
+    let uid = this.activatedRoute.snapshot.queryParams["uid"];
+    if(uid){
+      this.userID = uid;
+      this.qService.queryUserInfo(this.userID);
+    }
   }
 
   checkLoggedIn(){
@@ -34,5 +41,4 @@ export class HomeComponent implements OnInit {
       }
     });
   }
-
 }

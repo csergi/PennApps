@@ -5,6 +5,9 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class QuestionService {
 
+  public name : string;
+  public email : string;
+
   constructor(private http : Http) { }
 
   // Need the actual links to send the requests to
@@ -55,7 +58,12 @@ export class QuestionService {
       "uid" : uidVal
     }
     headers.append("Content-Type", "application/json");
-    return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers });
+    this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers }).subscribe(res => {
+      if(res.json().success){
+        this.name = res.json().name;
+        this.email = res.json().email;
+      }
+    });
   }
 
 
