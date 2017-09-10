@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { QuestionService } from '../../services/questionservice.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private qService : QuestionService) { }
 
   ngOnInit() {
+    if(this.checkLoggedIn()){
+      console.log("True");
+    }
+  }
+
+  checkLoggedIn(){
+    this.qService.requestUserInfo().subscribe(res => {
+      if (res.json().success){
+        console.log(res.json());
+        return true;
+      } else {
+        console.log("Success is false; did not sign in with Google");
+        return false;
+      }
+    });
   }
 
 }

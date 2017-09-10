@@ -24,6 +24,7 @@ export class AskQuestionComponent implements OnInit {
     }
   }
 
+  // Still need to separate these tags
   separateTags(event){
     if(event.keyCode == 32){
       if(this.prevWord){
@@ -48,9 +49,9 @@ export class AskQuestionComponent implements OnInit {
     this.qService.requestUserInfo().subscribe(result => {
       console.log(typeof result);
       if(result.json().success == true){
-        return true;
+        return true; // Can get user info
       } else {
-        return false;
+        return false; // Cannot get user info
       }
     });
   }
