@@ -12,19 +12,20 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    $_SESSION['token'] =  $client->getAccessToken(); //set up for use in this script.
-    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com";</script>';
+    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?token= ' . $client->getAccessToken() . '";</script>';
 }
 
-try{
-    $client->setAccessToken($_SESSION['token']);
-}catch(Exception $e){
-    $authorizedRequest = false;
-}
+
 
 //get the json of the request
 $requestBody = file_get_contents('php://input');
 $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
+
+try{
+    $client->setAccessToken($json['token']);
+}catch(Exception $e){
+    $authorizedRequest = false;
+}
 
 //get auth url
 if($json['request'] == 'authUrl'){

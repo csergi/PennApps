@@ -144,6 +144,10 @@ require_once 'google-api-php-client-2.2.0/vendor/autoload.php';
 
 $authorizedRequest = true;
 
+//get the json of the request
+$requestBody = file_get_contents('php://input');
+$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
+
 //handle google requests
 $client = new Google_Client();
 $client->setAuthConfig('../google.json');
@@ -151,7 +155,7 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $name = "";
 $email = "";
 try{
-    $client->setAccessToken($_SESSION['token']);
+    $client->setAccessToken($json['token']);
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
     $lastName = $usrInfo->getFamilyName();
@@ -161,10 +165,6 @@ try{
 }catch(Exception $e){
     $authorizedRequest = false;
 }
-
-//get the json of the request
-$requestBody = file_get_contents('php://input');
-$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
 
 //process the request
 if($json['request'] == 'post'){
