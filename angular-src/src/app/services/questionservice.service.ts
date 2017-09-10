@@ -69,6 +69,8 @@ export class QuestionService {
         console.log(this.name);
         this.email = res.json().email;
         console.log(this.email);
+      } else {
+        console.log(res.json().success);
       }
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { slideUpDown } from '../../_animations/slideup.animation';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-question-detail',
@@ -18,7 +19,7 @@ export class QuestionDetailComponent implements OnInit {
 
   private questionTitle : string = "Multi-threading in Java";
   private questionBody : string = "The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. I tried with trick suchas ad";
-  
+
   private starred : boolean = false;
 
   private ansArray = [];
@@ -36,7 +37,9 @@ export class QuestionDetailComponent implements OnInit {
 
   private submittedAns : string;
 
-  constructor() { }
+  private sub : any;
+
+  constructor(private route : ActivatedRoute, private router : Router) { }
 
   ngOnInit() {
     this.ansArray.push("I'm not sure whether this is a complete answer to this question, but my problem was very similar - I had to process back button press and bring user to previous tab where he was. So, maybe my solution will be useful for somebody: Please, keep in mind that if user press other navigation tab BottomNavigationView won't clear currently selected item, so you need to call this method in your onNavigationItemSelected after processing of navigation action: I'm not sure whether this is a complete answer to this question, but my problem was very similar - I had to process back button press and bring user to previous tab where he was. So, maybe my solution will be useful for somebody:");

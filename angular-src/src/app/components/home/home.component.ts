@@ -22,8 +22,6 @@ export class HomeComponent implements OnInit {
       this.userID = uid;
       console.log(uid);
       this.qService.queryUserInfo(this.userID);
-      console.log(this.qService.name);
-      console.log(this.qService.email);
     }
   }
 
