@@ -59,6 +59,8 @@ export class QuestionService {
       "request" : "userData",
       "uid" : uidVal
     }
+    console.log("Inside queryUserInfo in the qService");
+    console.log(uidVal);
     this.uid = uidVal;
     headers.append("Content-Type", "application/json");
     this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers }).subscribe(res => {

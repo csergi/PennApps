@@ -18,13 +18,10 @@ export class HomeComponent implements OnInit {
     if(this.checkLoggedIn()){
       console.log("True");
     }
-    // this.activatedRoute.params.subscribe((params : Params) => {
-    //   var uidVal =  params['uid'];
-    //   console.log(uidVal);
-    // });
     let uid = this.activatedRoute.snapshot.queryParams["uid"];
     if(uid){
       this.userID = uid;
+      console.log(uid);
       this.qService.queryUserInfo(this.userID);
     }
   }
