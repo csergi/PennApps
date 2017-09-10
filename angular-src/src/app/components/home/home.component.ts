@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
 
   checkLoggedIn(){
     this.qService.requestUserInfo().subscribe(res => {
+      console.log(res.json());
       if (res.json().success){
         console.log(res.json());
         return true;
