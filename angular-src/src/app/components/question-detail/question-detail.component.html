@@ -140,16 +140,17 @@
     </div>
   </div>
 
-  <div class="new-row">
+  <div class="new-row" style="position:relative;left:50px;">
     <h5>Post your answer!</h5>
     <p class="inline">PLEASE answer the question with clear work and steps. Provide any details or research you may have conducted.</p>
     <br>
     <p class="inline">PLEASE DO NOT provide your opinion on the matter unless stated otherwise</p>
   </div>
 
-  <div class="form-container new-row">
+  <div class="form-container new-row" style="position:relative;left:50px;">
     <form>
       <textarea name="answer" rows="8" cols="80" [(ngModel)]="submittedAns"></textarea>
+<br>
       <button (click)="submitAnswer()" class="btn btn-default">Submit</button>
     </form>
   </div>
