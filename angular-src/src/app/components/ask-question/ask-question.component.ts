@@ -47,7 +47,9 @@ export class AskQuestionComponent implements OnInit {
       "uid" : this.qService.uid,
     };
     console.log(questionObj);
-    this.qService.askQuestion(questionObj);
+    this.qService.askQuestion(questionObj).subscribe(res => {
+      console.log(res.json().success);
+    });
   }
 
   isLoggedIn(){
