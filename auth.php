@@ -30,6 +30,7 @@ $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON 
 //get auth url
 if($json['request'] == 'authUrl'){
     $out = array();
+    $out['success'] = true;
     $out['url'] = $client->createAuthUrl();
     echo json_encode($out);
 }
@@ -49,7 +50,7 @@ if($json['request'] == 'logout' && isset($_COOKIE['token'])){
 
 if($json['request'] == 'userData'){
     if($authorizedRequest == false){
-        die(json_encode(array("error"=>"unauthenticated request")));
+        die(json_encode(array("error"=>"unauthenticated request", "success"=>false)));
     }
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
@@ -58,6 +59,7 @@ if($json['request'] == 'userData'){
     $name = $firstName . ' ' . $lastName;
     $email = $usrInfo->getEmail();
     $out = array();
+    $out['success'] = true;
     $out['name'] = $name;
     $out['email'] = $email;
     echo json_encode($out);
