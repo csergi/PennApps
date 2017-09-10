@@ -17,7 +17,7 @@ if(isset($_GET['code'])){
     $stmt->bindValue(1, $uid);
     $stmt->bindValue(2, serialize($client->getAccessToken()));
     $stmt->execute();
-    die('<script>window.locaition.replace("http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '";</script>")');
+    die('<script>window.location.replace("http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '";</script>")');
 }
 try{
     $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
