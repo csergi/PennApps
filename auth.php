@@ -9,7 +9,7 @@ $authorizedRequest = true;
 $client = new Google_Client();
 $client->setAuthConfig('google.json');
 $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
-$client->setRedirectUri('http://pennapps-179414.appspot.com/auth.php');
+$client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     setcookie('token', $client->getAccessToken() ,  time() + 3600 , '/');
