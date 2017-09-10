@@ -37,13 +37,6 @@ try{
     $authorizedRequest = false;
 }
 
-
-try{
-    $client->setAccessToken($json['token']);
-}catch(Exception $e){
-    $authorizedRequest = false;
-}
-
 //get auth url
 if($json['request'] == 'authUrl'){
     $out = array();
