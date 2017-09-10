@@ -12,7 +12,7 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    $stmt = $dbh->('INSERT INTO login VALUES(?,?)');
+    $stmt = $dbh->prepare('INSERT INTO login VALUES(?,?)');
     $uid = bin2hex(openssl_random_bytes(8);
     $stmt->bindValue(1, $uid);
     $stmt->bindValue(2, serialize($client->getAccessToken());
