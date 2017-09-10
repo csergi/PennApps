@@ -146,7 +146,7 @@ $authorizedRequest = true;
 
 //handle google requests
 $client = new Google_Client();
-$client->setAuthConfig('google.json');
+$client->setAuthConfig('../google.json');
 $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
 $name = "";
 $email = "";

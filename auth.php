@@ -7,7 +7,7 @@ $authorizedRequest = true;
 
 //handle google requests
 $client = new Google_Client();
-$client->setAuthConfig('google.json');
+$client->setAuthConfig('../google.json');
 $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
