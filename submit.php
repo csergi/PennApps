@@ -151,7 +151,7 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $name = "";
 $email = "";
 try{
-    $client->setAccessToken($_COOKIE['token']);
+    $client->setAccessToken($_SESSION['token']);
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
     $lastName = $usrInfo->getFamilyName();

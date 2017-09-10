@@ -2,7 +2,7 @@
 //add the google client to the repo
 require 'db.php';
 require_once 'google-api-php-client-2.2.0/vendor/autoload.php';
-
+session_start();
 $authorizedRequest = true;
 
 //handle google requests
@@ -12,8 +12,7 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    setcookie('token', (string) $client->getAccessToken() ,  time() + 3600 , '/');
-    $_COOKIE['token'] = (string) $client->getAccessToken(); //set up for use in this script.
+    $_SESSION['token'] =  $client->getAccessToken(); //set up for use in this script.
     echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com/";</script>';
 }
 
@@ -41,8 +40,7 @@ if($json['request'] == 'logout' && isset($_COOKIE['token'])){
     $stmt = $dbh->prepare('DELETE FROM auth WHERE oauthToken = ?');
     $stmt->execute(array($_COOKIE['token']));
     $client->revokeToken();
-    setcookie('token' , '' , time() + (3600) , '/');
-    unset($_COOKIE['token']);
+    unset($_SESSION['token']);
     $response = array();
     $response['success'] = true;
     echo json_encode($response);
