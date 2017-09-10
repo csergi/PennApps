@@ -15,7 +15,7 @@ if(isset($_GET['code'])){
     $stmt = $dbh->prepare('INSERT INTO login VALUES(?,?)');
     $uid = bin2hex(openssl_random_bytes(8));
     $stmt->bindValue(1, $uid);
-    $stmt->bindValue(2, serialize($client->getAccessToken());
+    $stmt->bindValue(2, serialize($client->getAccessToken()));
     $stmt->execute();
     die('<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '";</script>');
 }
