@@ -31,6 +31,7 @@ if(isset($_GET['code'])){
 $requestBody = file_get_contents('php://input');
 $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
 
+$uid
 if(isset($json['uid'])){$uid = $json['uid'];}
 try{
     $stmt = $dbh->prepare('SELECT name FROM login WHERE uid = ?');
