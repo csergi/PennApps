@@ -16,12 +16,8 @@ if(isset($_GET['code'])){
     $uid = bin2hex(openssl_random_pseudo_bytes(8));
     $client->setAccessToken($client->getAccessToken());
     $oauth = new Google_Service_Oauth2($client);
-    $usrInfo = $oauth->userinfo->get();
-    print_r($usrInfo);
-    $lastName = $usrInfo->getFamilyName();
-    $firstName = $usrInfo->getGivenName();
-    $name = $firstName . ' ' . $lastName;
-    $out = array();
+    $usrInfo = $plus->people->get();
+    $name = $usrInfo->getName();
     $stmt->bindValue(1, $uid);
     $stmt->bindValue(2, $name);
     $stmt->execute();
