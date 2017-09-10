@@ -42,9 +42,11 @@ export class AskQuestionComponent implements OnInit {
       "request" : "post",
       "body" : this.questionBody,
       "title": this.questionTitle,
-      "tags" : this.tagsArray,
+      "tags" : this.tagsString,
       "type" : 0,
+      "uid" : this.qService.uid,
     };
+    console.log(questionObj);
     this.qService.askQuestion(questionObj);
   }
 

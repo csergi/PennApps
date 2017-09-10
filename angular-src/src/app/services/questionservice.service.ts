@@ -7,6 +7,7 @@ export class QuestionService {
 
   public name : string;
   public email : string;
+  public uid : string;
 
   constructor(private http : Http) { }
 
@@ -57,6 +58,7 @@ export class QuestionService {
       "request" : "userData",
       "uid" : uidVal
     }
+    this.uid = uidVal;
     headers.append("Content-Type", "application/json");
     this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers }).subscribe(res => {
       if(res.json().success){
