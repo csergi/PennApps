@@ -12,8 +12,8 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    setcookie('token', $client->getAccessToken() ,  time() + 3600 , '/');
-    $_COOKIE['token'] = $client->getAccessToken(); //set up for use in this script.
+    setcookie('token', (string) $client->getAccessToken() ,  time() + 3600 , '/');
+    $_COOKIE['token'] = (string) $client->getAccessToken(); //set up for use in this script.
     echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com/";</script>';
 }
 
