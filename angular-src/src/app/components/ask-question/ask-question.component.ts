@@ -14,10 +14,14 @@ export class AskQuestionComponent implements OnInit {
   private tagsString : string;
   private tagsArray = [];
   private prevWord : string;
+  private googleUrl : string;
 
   constructor(private qService : QuestionService) { }
 
   ngOnInit() {
+    if(!this.isLoggedIn()){
+      this.getGoogleLink();
+    }
   }
 
   separateTags(event){
@@ -40,4 +44,26 @@ export class AskQuestionComponent implements OnInit {
     };
   }
 
+  isLoggedIn(){
+    this.qService.requestUserInfo().subscribe(result => {
+      console.log(typeof result);
+      if(result.json().success == true){
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  getGoogleLink(){
+    this.qService.getGoogleAccLink().subscribe(resObj => {
+      if(resObj.json().success){
+        console.log(resObj.json());
+        this.googleUrl = resObj.json().url;
+        window.location.href = this.googleUrl;
+      } else {
+        console.log("Something went wrong; the API for the Google Sign returned 'success' : 'false'");
+      }
+    });
+  }
 }

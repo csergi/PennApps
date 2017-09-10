@@ -7,6 +7,8 @@ export class QuestionService {
 
   constructor(private http : Http) { }
 
+  // Need the actual links to send the requests to
+
   askQuestion(questionObj){
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
@@ -18,5 +20,36 @@ export class QuestionService {
     headers.append("Content-Type", "application/json");
     return this.http.post("http://????", replyObj, { headers: headers });
   }
+
+  requestUserInfo(){
+    let headers = new Headers();
+    var reqObj = {
+      "request" : "userData"
+    };
+    headers.append("Content-Type", "application/json");
+    return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers: headers });
+  }
+
+  getGoogleAccLink(){
+    let headers = new Headers();
+    var reqObj = {
+      "request" : "authUrl"
+    };
+    headers.append("Content-Type", "application/json");
+    return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers: headers });
+  }
+
+  logOut(){
+    let headers = new Headers();
+    var reqObj = {
+      "request" : "logout"
+    };
+    headers.append("Content-Type", "application/json");
+    return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers: headers });
+  }
+
+
+
+
 
 }

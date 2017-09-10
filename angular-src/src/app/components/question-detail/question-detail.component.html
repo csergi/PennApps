@@ -16,19 +16,23 @@
       <div>
         <div class="col-md-1 text-center">
           <div class="new-row">
-            <i class="fa fa-3x fa-fw fa-thumbs-up"></i>
+            <i class="fa fa-3x fa-fw fa-thumbs-up" (click)="hasThumbed ? return : qThumbCount = qThumbCount + 1; hasThumbed = true;"></i>
           </div>
 
           <div class="new-row">
-            <p class="thumbsCount">13</p>
+            <p class="thumbsCount">{{qThumbCount}}</p>
           </div>
 
           <div class="new-row">
-            <i class="fa fa-3x fa-fw fa-thumbs-down"></i>
+            <i class="fa fa-3x fa-fw fa-thumbs-down" (click)="hasThumbed ? return : qThumbCount = qThumbCount - 1; hasThumbed = true;"></i>
           </div>
 
-          <div class="new-row">
-            <i class="fa fa-3x fa-fw fa-star" style="color: #BDBDBD"></i>
+          <div class="new-row" *ngIf="!starred">
+            <i class="fa fa-3x fa-fw fa-star" style="color: #BDBDBD" (click)="starred = true;"></i>
+          </div>
+
+          <div class="new-row" *ngIf="starred">
+            <i class="fa fa-3x fa-fw fa-star" style="color: #FFEB3B" (click)="starred = false;"></i>
           </div>
 
         </div>
@@ -51,17 +55,17 @@
         <div id="badge-row">
           <div class="badge-container">
             <i class="fa fa-1x fa-fw fa-circle gold-badge"></i>
-            <p>{{numGold}}</p>
+            <p>{{qNumGold}}</p>
           </div>
 
           <div class="badge-container">
             <i class="fa fa-1x fa-fw fa-circle silver-badge"></i>
-            <p>{{numSilver}}</p>
+            <p>{{qNumSilver}}</p>
           </div>
 
           <div class="badge-container">
             <i class="fa fa-1x fa-fw fa-circle bronze-badge"></i>
-            <p>{{numBronze}}</p>
+            <p>{{qNumBronze}}</p>
           </div>
         </div>
 

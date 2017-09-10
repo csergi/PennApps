@@ -1,12 +1,13 @@
 .question-container {
-  border-top: grey solid 1px;
-  border-bottom: grey solid 1px;
+  border-top: #CFD8DC solid 1px;
+  border-bottom: #CFD8DC solid 1px;
   margin: 15px 0px;
 }
 
 .question-stats {
   display: block;
   margin: 3px 0px;
+  color: #757575;
 }
 
 .vcenter {
@@ -21,5 +22,9 @@
 
 a {
   text-decoration: none;
-  color: black;
+  color: #616161;
+}
+
+i {
+  color: #757575;
 }

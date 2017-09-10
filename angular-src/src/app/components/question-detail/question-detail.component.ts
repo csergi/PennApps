@@ -11,15 +11,22 @@ import { slideUpDown } from '../../_animations/slideup.animation';
   }
 })
 export class QuestionDetailComponent implements OnInit {
+
+  private qThumbCount : number = 13;
+  private hasThumbed : boolean = false;
+
+
   private questionTitle : string = "Multi-threading in Java";
   private questionBody : string = "The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. The following is my layout xml. The problem now is that the BottomNavigationView is overlapping the FrameLayout. I wanted the FrameLayout to stretch to the top of the BottomNavigationView. I tried with trick such as adding paddingBottom in the FrameLayout but I wonder if there is other better solution. Thanks. I tried with trick suchas ad";
+  
+  private starred : boolean = false;
 
   private ansArray = [];
 
   private user : string = "Jane Doe";
-  private numGold : number = 14;
-  private numSilver : number = 5;
-  private numBronze : number = 9;
+  private qNumGold : number = 14;
+  private qNumSilver : number = 5;
+  private qNumBronze : number = 9;
 
   private dateInquired : string = "Oct. 10th, 2016";
   private numViews : number = 14327;
