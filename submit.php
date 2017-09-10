@@ -142,10 +142,15 @@ function vote($dbh, $id, $vote){
 require 'db.php';
 require_once 'google-api-php-client-2.2.0/vendor/autoload.php';
 
+
+//get the json of the request
+$requestBody = file_get_contents('php://input');
+$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
+
 $authorizedRequest = true;
 try{
     $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
-    $stmt->bindValue(1, $uid);
+    $stmt->bindValue(1, $json['uid']);
     $stmt->execute();
 
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -154,9 +159,6 @@ try{
 }catch(Exception $e){
     $authorizedRequest = false;
 }
-//get the json of the request
-$requestBody = file_get_contents('php://input');
-$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
 
 //handle google requests
 $client = new Google_Client();
