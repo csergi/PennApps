@@ -41,8 +41,11 @@ export class AskQuestionComponent implements OnInit {
     var questionObj = {
       "request" : "post",
       "body" : this.questionBody,
-      "type" : 0
+      "title": this.questionTitle,
+      "tags" : this.tagsArray,
+      "type" : 0,
     };
+    this.qService.askQuestion(questionObj);
   }
 
   isLoggedIn(){

@@ -15,13 +15,13 @@ export class QuestionService {
   askQuestion(questionObj){
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post("http://????", questionObj, { headers: headers });
+    return this.http.post("http://ec2-34-229-153-170.compute-1.amazonaws.com/submit.php", questionObj, { headers: headers });
   }
 
   replyToQuestion(replyObj){
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
-    return this.http.post("http://????", replyObj, { headers: headers });
+    return this.http.post("http://ec2-34-229-153-170.compute-1.amazonaws.com/submit.php", replyObj, { headers: headers });
   }
 
   requestUserInfo(){
