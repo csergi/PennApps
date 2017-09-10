@@ -13,11 +13,11 @@ $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     $_SESSION['token'] =  $client->getAccessToken(); //set up for use in this script.
-    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com/";</script>';
+    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com";</script>';
 }
 
 try{
-    $client->setAccessToken($_COOKIE['token']);
+    $client->setAccessToken($_SESSION['token']);
 }catch(Exception $e){
     $authorizedRequest = false;
 }
@@ -35,10 +35,10 @@ if($json['request'] == 'authUrl'){
 }
 
 //logout
-if($json['request'] == 'logout' && isset($_COOKIE['token'])){
+if($json['request'] == 'logout' && isset($_SESSION['token'])){
     require 'db.php';
     $stmt = $dbh->prepare('DELETE FROM auth WHERE oauthToken = ?');
-    $stmt->execute(array($_COOKIE['token']));
+    $stmt->execute(array($_SESSION['token']));
     $client->revokeToken();
     unset($_SESSION['token']);
     $response = array();
