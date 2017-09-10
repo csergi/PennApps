@@ -8,11 +8,12 @@ function createID(){//exacts what it will be will be determined later
     return $rand;
 }
 
-function post($dbh ,$name, $body, $tags, $type, $thread = -1){
-	$stmt = $dbh->prepare('INSERT INTO posts (id, name, body, tags, type, thread, time) VALUES (NULL, :name, :body, :tags, :type, :thread, NOW())');//create a way to deal with nonunique ids
+function post($dbh ,$name, $title, $body, $tags, $type, $thread = -1){
+	$stmt = $dbh->prepare('INSERT INTO posts (id, name, title, body, tags, type, thread, time) VALUES (NULL, :name, :title, :body, :tags, :type, :thread, NOW())');//create a way to deal with nonunique ids
 	$id = createID();
 	$stmt->bindValue(':name', $name);
 	$stmt->bindValue(':body', $body);
+	$stmt->bindValue(':title', $title);
 	$stmt->bindValue(':tags', implode(',' , $tags));
 	
 	//if its a question type is 0; if its a comment, 1
@@ -171,7 +172,7 @@ try{
     $usrInfo = $oauth->userinfo->get();
     $lastName = $usrInfo->getFamilyName();
     $firstName = $usrInfo->getGivenName();
-    $displayName = $firstName . ' ' . $lastName;
+    $name = $firstName . ' ' . $lastName;
     $email = $usrInfo->getEmail();
 }catch(Exception $e){
     $authorizedRequest = false;
@@ -184,9 +185,9 @@ if($json['request'] == 'post'){
     }
     try{
         if($json['type'] == 0){
-            $ret = post($dbh, $name, $json['body'], $json['tags'], $json['type']);
+            $ret = post($dbh, $name, $json['title'] $json['body'], $json['tags'], $json['type']);
         }else if($json['type'] == 1){
-            $ret = post($dbh, $name, $json['body'], $json['tags'], $json['type'], $json['thread']);
+            $ret = post($dbh, $name, $json['title'], $json['body'], $json['tags'], $json['type'], $json['thread']);
         }
         $out = array();
         if($ret == 0){

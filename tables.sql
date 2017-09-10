@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS posts; #so if we are changing the tables, we get the info
 CREATE TABLE posts (
 	id BIGINT NOT NULL,
 	name TEXT,
+	title TEXT,
 	body TEXT,
 	tags TEXT, #serialized
 	type INT, #0 if its a question, 1 if its answer,
