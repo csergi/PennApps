@@ -35,10 +35,10 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 	foreach($searchTerms as $term){
 		$termStmt = $dbh->prepare('SET @term = :term');
 		$termStmt->execute(array($term));
-		$sql = 	"SELECT TOP :num thread FROM posts WHERE
+		$sql = 	"SELECT thread FROM posts WHERE
 			UPPER(name) LIKE CONCAT('%', UPPER(@term), '%') OR
 			UPPER(body) LIKE CONCAT('%', UPPER(@term), '%') OR
-			UPPER(tags) LIKE CONCAT('%', UPPER(@term), '%')";
+			UPPER(tags) LIKE CONCAT('%', UPPER(@term), '%') LIMIT :num";
 		$searchStmt = $dbh->prepare($sql);
 		$searchStmt->bindValue(':num', $numberOfResults);
 		$searchStmt->execute();
@@ -73,7 +73,7 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 }
 
 function popularPosts($dbh, $numberOfResults){
-    $stmt = $dbh->prepare('SELECT TOP :num * FROM posts WHERE type = 0 ORDER BY views');
+    $stmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 ORDER BY views DESC LIMIT :num');
     $stmt->bindValue(':num', $numberOfResults);
     $stmt->execute();
     
@@ -154,7 +154,9 @@ try{
     $client->setAccessToken($_COOKIE['token']);
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
-    $name = $usrInfo->getName();
+    $lastName = $usrInfo->getFamilyName();
+    $firstName = $usrInfo->getGivenName();
+    $displayName = $firstName . ' ' . $lastName;
     $email = $usrInfo->getEmail();
 }catch(Exception $e){
     $authorizedRequest = false;
@@ -167,7 +169,7 @@ $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON 
 //process the request
 if($json['request'] == 'post'){
     if($authorizedRequest == false){//if they are not signed in
-        die(json_encode(array("error"=>"authentication  failed")));
+        die(json_encode(array("error"=>"unauthenticated request")));
     }
     try{
         if($json['type'] == 0){
@@ -220,6 +222,9 @@ if($json['request'] == 'post'){
         echo $json_encode($out);
     }
 }else if($json['request'] == 'vote'){
+    if($authorizedRequest == false){
+        die(json_encode(array("error"=>"unauthenticated request")));
+    }
     $out = array();
     try{
         $out = vote($dbh, $json['id'] , $json['vote']);
