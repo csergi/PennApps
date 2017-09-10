@@ -9,8 +9,9 @@ function createID(){//exacts what it will be will be determined later
 }
 
 function post($dbh ,$name, $title, $body, $tags, $type, $thread = -1){
-	$stmt = $dbh->prepare('INSERT INTO posts (id, name, title, body, tags, type, thread, time) VALUES (NULL, :name, :title, :body, :tags, :type, :thread, NOW())');//create a way to deal with nonunique ids
+	$stmt = $dbh->prepare('INSERT INTO posts (id, name, title, body, tags, type, thread, time) VALUES (:id, :name, :title, :body, :tags, :type, :thread, NOW())');//create a way to deal with nonunique ids
 	$id = createID();
+	$stmt->bindValue(':id', $id);
 	$stmt->bindValue(':name', $name);
 	$stmt->bindValue(':body', $body);
 	$stmt->bindValue(':title', $title);
@@ -19,13 +20,12 @@ function post($dbh ,$name, $title, $body, $tags, $type, $thread = -1){
 	//if its a question type is 0; if its a comment, 1
 	if($type == 0){
 		$stmt->bindValue(':type', 0);
-		$stmt->bindValue(':thread' , $id);	
+		$stmt->bindValue(':thread' , $id);
 	}else{
 		$stmt->bindValue(':type', 1);
 		$stmt->bindValue(':thread', $thread);
 	}
 	$stmt->execute();
-	
 	return 0;
 }
 
@@ -109,6 +109,7 @@ function getThread($dbh , $thread){
 	$replyStmt = $dbh->prepare('SELECT * FROM posts WHERE type = 1 AND thread=:thread');
 	$replyStmt->bindValue(':thread', $thread);
 	$replyStmt->execute();
+        
 	$res = $replyStmt->fetchAll(PDO::FETCH_ASSOC);
 	//determine if there are answers
 	if(empty($res)){
