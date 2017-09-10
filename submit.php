@@ -186,7 +186,7 @@ if($json['request'] == 'post'){
     }
     try{
         if($json['type'] == 0){
-            $ret = post($dbh, $name, $json['title'] $json['body'], $json['tags'], $json['type']);
+            $ret = post($dbh, $name, $json['title'], $json['body'], $json['tags'], $json['type']);
         }else if($json['type'] == 1){
             $ret = post($dbh, $name, $json['title'], $json['body'], $json['tags'], $json['type'], $json['thread']);
         }
