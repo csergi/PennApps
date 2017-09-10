@@ -155,6 +155,7 @@ try{
     $stmt->execute();
 
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $name['name'];
 }catch(Exception $e){
     $authorizedRequest = false;
 }
