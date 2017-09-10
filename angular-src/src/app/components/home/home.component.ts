@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { QuestionService } from '../../services/questionservice.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,6 +22,8 @@ export class HomeComponent implements OnInit {
       this.userID = uid;
       console.log(uid);
       this.qService.queryUserInfo(this.userID);
+      console.log(this.qService.name);
+      console.log(this.qService.email);
     }
   }
 

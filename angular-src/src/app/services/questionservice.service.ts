@@ -66,7 +66,9 @@ export class QuestionService {
     this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers : headers }).subscribe(res => {
       if(res.json().success){
         this.name = res.json().name;
+        console.log(this.name);
         this.email = res.json().email;
+        console.log(this.email);
       }
     });
   }
