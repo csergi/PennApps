@@ -1,18 +1,18 @@
 <div *ngIf="warning">
 
   <div>
-    <p>How to ask</p>
+    <p style= "font-size;200%;color:black;">How to ask:</p>
   </div>
 
   <p>
-    Welcome to Student Overflow!
+    Welcome to Homework Overflow!
     <br>
     Here, we'll try our best to help you but unforunately, not every question gets answered.
   </p>
 
-  <h4>
+  <h5>
     Search and search and search
-  </h4>
+  </h5>
 
   <p>
     Have you done your research? Doing your research will help others provide answers specific to your problem.
@@ -33,6 +33,7 @@
 <div *ngIf="!warning">
   <div class="container">
     <h4 style="display: inline;">Title: </h4>
+    <br>
     <input class="form-control" type="text" [(ngModel)]="questionTitle" placeholder="Provide a brief description of the question you're asking" style="width: 100%">
     <br>
     <textarea class="form-control" name="QuestionBody" rows="8" cols="80" [(ngModel)]="questionBody" placeholder="Enter the details of your question. Be sure to include any references or sources."></textarea>
