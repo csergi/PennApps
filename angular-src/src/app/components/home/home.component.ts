@@ -10,6 +10,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   private userID : string;
+  private questionArray = [];
 
   constructor(private qService : QuestionService, private activatedRoute : ActivatedRoute) { }
 
@@ -17,6 +18,7 @@ export class HomeComponent implements OnInit {
     this.qService.getQuestionList().subscribe(res => {
       if(res.json().success){
         console.log(res.json());
+        this.questionArray = res.json().data;
       }
     });
 

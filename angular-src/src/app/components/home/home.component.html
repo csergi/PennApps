@@ -36,9 +36,8 @@
       <a [routerLink]="['/askquestion']"><button class="btn btn-default pull-right">Ask A Question</button></a>
     </div>
     <div id="hot-questions" class="container">
-      <app-question-item></app-question-item>
-      <app-question-item></app-question-item>
-      <app-question-item></app-question-item>
-      <app-question-item></app-question-item>
+      <div *ngFor="let x of questionArray">
+        <app-question-item></app-question-item>
+      </div>
     </div>
   </nav>
