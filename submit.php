@@ -74,9 +74,8 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 	return $results;
 }
 
-function popularPosts($dbh, $numberOfResults){
-    $stmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 ORDER BY views DESC LIMIT :num');
-    $stmt->bindValue(':num', $numberOfResults);
+function popularPosts($dbh){
+    $stmt = $dbh->prepare('SELECT * FROM posts WHERE type = 0 ORDER BY views DESC');
     $stmt->execute();
     
     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -210,8 +209,9 @@ if($json['request'] == 'post'){
 }else if($json['request'] == 'popular'){
     $out = array();
     try{
-        $out = popularPosts($dbh, $json['numberOfResults']);
-        $out['success'] = true;
+        $data = popularPosts($dbh);
+        $out['data'] = $data;
+	$out['success'] = true;
         echo json_encode($out);
     }catch(Exception $e){
         $out['success'] = false;

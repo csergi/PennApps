@@ -15,12 +15,19 @@ if(isset($_GET['code'])){
     $stmt = $dbh->prepare('INSERT INTO login VALUES(?,?)');
     $uid = bin2hex(openssl_random_pseudo_bytes(8));
     $client->setAccessToken($client->getAccessToken());
+    $plus = new Google_Service_Plus($client);
     $oauth = new Google_Service_Oauth2($client);
-    $usrInfo = $plus->people->get();
-    $name = $usrInfo->getName();
+	$usrInfo = $oauth->userinfo->get();
+    
+$lastName = $usrInfo->getFamilyName();
+	$firstName = $usrInfo->getGivenName();
+	$name = $firstName . ' ' . $lastName;
+
+    flush();
     $stmt->bindValue(1, $uid);
     $stmt->bindValue(2, $name);
     $stmt->execute();
+    print_r($stmt->errorInfo());
     die('<script>window.location.replace("http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '");</script>');
 }
 
@@ -38,6 +45,7 @@ try{
     $name = $stmt->fetch(PDO::FETCH_ASSOC);
     $name = $name['name'];
 }catch(Exception $e){
+    print_r($e);
     $authorizedRequest = false;
 }
 
