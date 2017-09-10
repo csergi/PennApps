@@ -28,7 +28,8 @@ export class QuestionService {
   requestUserInfo(){
     let headers = new Headers();
     var reqObj = {
-      "request" : "userData"
+      "request" : "userData",
+      "uid" : "-1"
     };
     headers.append("Content-Type", "application/json");
     return this.http.post('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php', reqObj, { headers: headers });
