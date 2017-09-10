@@ -150,31 +150,11 @@ $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON 
 
 $authorizedRequest = true;
 try{
-    $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
+    $stmt = $dbh->prepare('SELECT name FROM login WHERE uid = ?');
     $stmt->bindValue(1, $json['uid']);
     $stmt->execute();
 
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
-    $res = unserialize($res['token']);
-    print_r($res);
-    $client->setAccessToken(json_encode($res));
-}catch(Exception $e){
-    $authorizedRequest = false;
-}
-
-//handle google requests
-$client = new Google_Client();
-$client->setAuthConfig('../google.json');
-$client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oauth2::USERINFO_PROFILE));
-$name = "";
-$email = "";
-try{
-    $oauth = new Google_Service_Oauth2($client);
-    $usrInfo = $oauth->userinfo->get();
-    $lastName = $usrInfo->getFamilyName();
-    $firstName = $usrInfo->getGivenName();
-    $name = $firstName . ' ' . $lastName;
-    $email = $usrInfo->getEmail();
+    $name = $stmt->fetch(PDO::FETCH_ASSOC);
 }catch(Exception $e){
     $authorizedRequest = false;
 }

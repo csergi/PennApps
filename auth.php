@@ -14,8 +14,15 @@ if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     $stmt = $dbh->prepare('INSERT INTO login VALUES(?,?)');
     $uid = bin2hex(openssl_random_pseudo_bytes(8));
+    $client->setAccessToken($client->getAccessToken());
+    $oauth = new Google_Service_Oauth2($client);
+    $usrInfo = $oauth->userinfo->get();
+    $lastName = $usrInfo->getFamilyName();
+    $firstName = $usrInfo->getGivenName();
+    $name = $firstName . ' ' . $lastName;
+    $out = array();
     $stmt->bindValue(1, $uid);
-    $stmt->bindValue(2, serialize($client->getAccessToken()));
+    $stmt->bindValue(2, $name);
     $stmt->execute();
     die('<script>window.location.replace("http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '");</script>');
 }
@@ -26,13 +33,11 @@ $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON 
 
 if(isset($json['uid'])){$uid = $json['uid'];}
 try{
-    $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
+    $stmt = $dbh->prepare('SELECT name FROM login WHERE uid = ?');
     $stmt->bindValue(1, $uid);
     $stmt->execute();
 
-    $res = $stmt->fetch(PDO::FETCH_ASSOC);
-    $res = unserialize($res['token']);
-    $client->setAccessToken(json_encode($res));
+    $name = $stmt->fetch(PDO::FETCH_ASSOC);
 }catch(Exception $e){
     $authorizedRequest = false;
 }
@@ -50,8 +55,6 @@ if($json['request'] == 'logout'){
     require 'db.php';
     $stmt = $dbh->prepare('DELETE FROM login WHERE uid = ?');
     $stmt->execute(array($uid));
-    $client->revokeToken();
-    unset($_SESSION['token']);
     $response = array();
     $response['success'] = true;
     echo json_encode($response);
@@ -61,16 +64,8 @@ if($json['request'] == 'userData'){
     if($authorizedRequest == false){
         die(json_encode(array("error"=>"unauthenticated request", "success"=>false)));
     }
-    $oauth = new Google_Service_Oauth2($client);
-    $usrInfo = $oauth->userinfo->get();
-    $lastName = $usrInfo->getFamilyName();
-    $firstName = $usrInfo->getGivenName();
-    $name = $firstName . ' ' . $lastName;
-    $email = $usrInfo->getEmail();
-    $out = array();
     $out['success'] = true;
     $out['name'] = $name;
-    $out['email'] = $email;
     echo json_encode($out);
 }
 ?>
