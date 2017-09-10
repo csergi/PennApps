@@ -11,7 +11,7 @@
           </div>
 
           <div class="col-md-4" >
-  <h3 style = "fontsize:18px;" style = "color:white;position:relative;left:40px;">Register:</h3>
+          <h3 style = "fontsize:18px;" style = "color:white;position:relative;left:40px;">Register:</h3>
 
             <form class="form-inline">
               <div class="form-group">
@@ -31,7 +31,8 @@
     </div>
 
     <div class="container" style="margin-top: 5px;">
-      <h4>Top Questions</h4>
+      <h4 style="display: inline">Top Questions</h4>
+      <a [routerLink]="['/askquestion']"><button class="btn btn-default pull-right">Ask A Question</button></a>
     </div>
     <div id="hot-questions" class="container">
       <app-question-item></app-question-item>
