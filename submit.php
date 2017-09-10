@@ -49,7 +49,7 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 			$threads[$thread] = $thread; //forces uniqueness
 		}
 	}
-
+	print_r($threads);
 	//convert threads to useful data
 	$results = array();
 	foreach($threads as $thread){
