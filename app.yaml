@@ -4,7 +4,7 @@ env: flex
 handlers:
 
 - url: /
-  script: /index.html
+  script: /angular-src/dist/index.html
 # Serve images as static resources.
 - url: /(.+\.(gif|png|jpg))$
   static_files: \1
