@@ -37,7 +37,7 @@
     <input class="form-control" type="text" [(ngModel)]="questionTitle" placeholder="Provide a brief description of the question you're asking" style="width: 100%">
     <br>
     <textarea class="form-control" name="QuestionBody" rows="8" cols="80" [(ngModel)]="questionBody" placeholder="Enter the details of your question. Be sure to include any references or sources."></textarea>
-    <button class="btn">Ask!</button>
+    <textarea class="form-control" name="Tags" rows="4" cols="100" [(ngModel)]="tagsString" (keypress)="separateTags($event)" placeholder="Enter any tags relevant to the question. Be sure to separate each tag with a space. Tags that include more than one word should be separated by '-'. (e.g. Calculus Ordinary-Differential-Equations Hard End-me-now)"></textarea>
+    <button class="btn" (click)="askQuestion()">Ask!</button>
   </div>
-
 </div>
