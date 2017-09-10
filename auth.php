@@ -12,11 +12,24 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    die('<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?token= ' . json_encode($client->getAccessToken()) . '";</script>');
+    $stmt = $dbh->('INSERT INTO login VALUES(?,?)');
+    $uid = bin2hex(openssl_random_bytes(8);
+    $stmt->bindValue(1, $uid);
+    $stmt->bindValue(2, serialize($client->getAccessToken());
+    $stmt->execute();
+    die('<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '";</script>');
 }
+try{
+    $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
+    $stmt->bindValue(1, $uid);
+    $stmt->execute();
 
-
-
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $res = unserialize($res['token']);
+    $client->setAccessToken($res);
+}catch(Exception $e){
+    $authorizedRequest = false;
+}
 //get the json of the request
 $requestBody = file_get_contents('php://input');
 $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));

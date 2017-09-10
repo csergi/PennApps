@@ -143,7 +143,17 @@ require 'db.php';
 require_once 'google-api-php-client-2.2.0/vendor/autoload.php';
 
 $authorizedRequest = true;
+try{
+    $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
+    $stmt->bindValue(1, $uid);
+    $stmt->execute();
 
+    $res = $stmt->fetch(PDO::FETCH_ASSOC);
+    $res = unserialize($res['token']);
+    $client->setAccessToken($res);
+}catch(Exception $e){
+    $authorizedRequest = false;
+}
 //get the json of the request
 $requestBody = file_get_contents('php://input');
 $json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
