@@ -19,6 +19,12 @@ if(isset($_GET['code'])){
     $stmt->execute();
     die('<script>window.location.replace("http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?uid=' . $uid . '");</script>');
 }
+
+//get the json of the request
+$requestBody = file_get_contents('php://input');
+$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
+
+if(isset($json['uid'])){$uid = $json['uid'];}
 try{
     $stmt = $dbh->prepare('SELECT token FROM login WHERE uid = ?');
     $stmt->bindValue(1, $uid);
@@ -30,9 +36,7 @@ try{
 }catch(Exception $e){
     $authorizedRequest = false;
 }
-//get the json of the request
-$requestBody = file_get_contents('php://input');
-$json = json_decode($requestBody, true) or die(json_encode(array("error"=>"JSON decode failed") ));
+
 
 try{
     $client->setAccessToken($json['token']);
@@ -49,10 +53,10 @@ if($json['request'] == 'authUrl'){
 }
 
 //logout
-if($json['request'] == 'logout' && isset($_SESSION['token'])){
+if($json['request'] == 'logout'){
     require 'db.php';
-    $stmt = $dbh->prepare('DELETE FROM auth WHERE oauthToken = ?');
-    $stmt->execute(array($_SESSION['token']));
+    $stmt = $dbh->prepare('DELETE FROM login WHERE uid = ?');
+    $stmt->execute(array($uid));
     $client->revokeToken();
     unset($_SESSION['token']);
     $response = array();
