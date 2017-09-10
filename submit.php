@@ -38,6 +38,7 @@ function searchPosts($dbh , $searchString, $numberOfResults){
 		$termStmt->execute(array($term));
 		$sql = 	"SELECT thread FROM posts WHERE
 			UPPER(name) LIKE CONCAT('%', UPPER(@term), '%') OR
+			UPPER(title) LIKE CONCAT('%', UPPER(@term), '%') OR
 			UPPER(body) LIKE CONCAT('%', UPPER(@term), '%') OR
 			UPPER(tags) LIKE CONCAT('%', UPPER(@term), '%') LIMIT :num";
 		$searchStmt = $dbh->prepare($sql);

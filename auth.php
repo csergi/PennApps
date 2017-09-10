@@ -17,6 +17,7 @@ if(isset($_GET['code'])){
     $client->setAccessToken($client->getAccessToken());
     $oauth = new Google_Service_Oauth2($client);
     $usrInfo = $oauth->userinfo->get();
+    print_r($usrInfo);
     $lastName = $usrInfo->getFamilyName();
     $firstName = $usrInfo->getGivenName();
     $name = $firstName . ' ' . $lastName;
