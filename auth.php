@@ -14,7 +14,7 @@ if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
     setcookie('token', $client->getAccessToken() ,  time() + 3600 , '/');
     $_COOKIE['token'] = $client->getAccessToken(); //set up for use in this script.
-    echo '<script>window.location.href="/index.html";</script>';
+    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com/home";</script>';
 }
 
 try{
