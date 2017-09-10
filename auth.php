@@ -12,7 +12,7 @@ $client->setScopes(array(Google_Service_Oauth2::USERINFO_EMAIL,Google_Service_Oa
 $client->setRedirectUri('http://ec2-34-229-153-170.compute-1.amazonaws.com/auth.php');
 if(isset($_GET['code'])){
     $client->authenticate($_GET['code']);
-    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?token= ' . $client->getAccessToken() . '";</script>';
+    echo '<script>window.location.href="http://frontend.studentoverflow.com.s3-website-us-east-1.amazonaws.com?token= ' . json_encode($client->getAccessToken()) . '";</script>';
 }
 
 
