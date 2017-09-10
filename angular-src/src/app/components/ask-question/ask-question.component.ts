@@ -49,6 +49,9 @@ export class AskQuestionComponent implements OnInit {
     console.log(questionObj);
     this.qService.askQuestion(questionObj).subscribe(res => {
       console.log(res.json().success);
+      if(res.json().success){
+        location.reload();
+      }
     });
   }
 

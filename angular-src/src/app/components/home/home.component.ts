@@ -14,6 +14,13 @@ export class HomeComponent implements OnInit {
   constructor(private qService : QuestionService, private activatedRoute : ActivatedRoute) { }
 
   ngOnInit() {
+    this.qService.getQuestionList().subscribe(res => {
+      if(res.json().success){
+        console.log(res.json());
+      }
+    });
+
+
     if(this.checkLoggedIn()){
       console.log("True");
     }

@@ -18,10 +18,25 @@ export class QuestionService {
     return this.http.post("http://ec2-34-229-153-170.compute-1.amazonaws.com/submit.php", questionObj, { headers: headers });
   }
 
-  replyToQuestion(replyObj){
+  replyToQuestion(reply){
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
+    var replyObj = {
+      "request" : "post",
+      "body" : reply,
+      "type" : 1,
+      "uid" : this.uid,
+    }
     return this.http.post("http://ec2-34-229-153-170.compute-1.amazonaws.com/submit.php", replyObj, { headers: headers });
+  }
+
+  getQuestionList(){
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    var reqObj = {
+      "request" : "popular"
+    }
+    return this.http.post("http://ec2-34-229-153-170.compute-1.amazonaws.com/submit.php", reqObj, { headers: headers });
   }
 
   requestUserInfo(){

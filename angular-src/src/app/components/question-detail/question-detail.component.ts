@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { slideUpDown } from '../../_animations/slideup.animation';
 import { Router, ActivatedRoute } from '@angular/router';
+import { QuestionService } from '../../services/questionservice.service';
 
 @Component({
   selector: 'app-question-detail',
@@ -39,7 +40,7 @@ export class QuestionDetailComponent implements OnInit {
 
   private sub : any;
 
-  constructor(private route : ActivatedRoute, private router : Router) { }
+  constructor(private route : ActivatedRoute, private router : Router, private qService : QuestionService) { }
 
   ngOnInit() {
     this.ansArray.push("I'm not sure whether this is a complete answer to this question, but my problem was very similar - I had to process back button press and bring user to previous tab where he was. So, maybe my solution will be useful for somebody: Please, keep in mind that if user press other navigation tab BottomNavigationView won't clear currently selected item, so you need to call this method in your onNavigationItemSelected after processing of navigation action: I'm not sure whether this is a complete answer to this question, but my problem was very similar - I had to process back button press and bring user to previous tab where he was. So, maybe my solution will be useful for somebody:");
@@ -49,7 +50,9 @@ export class QuestionDetailComponent implements OnInit {
   }
 
   submitAnswer(){
-    this.ansArray.push(this.submittedAns);
+    this.qService.replyToQuestion(this.submittedAns).subscribe(res => {
+      console.log(res.json().success);
+    });
   }
 
 }
