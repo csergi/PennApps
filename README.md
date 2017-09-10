@@ -1,7 +1,8 @@
 # PennApps
 Homework Overflow
 
-## Doing physics homework was ver frustrating. I would google stuff related to my physics homework problems and only find sites that were pay to use. So I thought why not create a reddit or Stackoverflow like webapp for non programming classes. 
+## Inspiration
+Doing physics homework was very frustrating. I would google stuff related to my physics homework problems and only find sites that were pay to use. So I thought why not create a reddit or Stackoverflow like webapp for non programming classes. 
 ## What it does
 It allows anyone with a google account to post and answer questions on the site. There are upvote features and the ability to search (will be implemented in the front end, already has code in the backend) for questions.   
 ## How we built it
