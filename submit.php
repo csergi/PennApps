@@ -156,6 +156,7 @@ try{
 
     $res = $stmt->fetch(PDO::FETCH_ASSOC);
     $res = unserialize($res['token']);
+    print_r($res);
     $client->setAccessToken($res);
 }catch(Exception $e){
     $authorizedRequest = false;
